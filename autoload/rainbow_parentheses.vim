@@ -25,7 +25,7 @@ let s:pairs = [
 let s:pairs = exists('g:rbpt_colorpairs') ? g:rbpt_colorpairs : s:pairs
 let s:max = exists('g:rbpt_max') ? g:rbpt_max : max([len(s:pairs), 16])
 let s:loadtgl = exists('g:rbpt_loadcmd_toggle') ? g:rbpt_loadcmd_toggle : 0
-let s:types = [['.(',')'],['.\[','\]'],['.{','}'],['\S<','>']]
+let s:types = [['(','',')'],['\[','','\]'],['{','','}'],['\S<','hs=s+1','>']]
 
 func! s:extend()
 	if s:max > len(s:pairs)
@@ -89,8 +89,8 @@ func! rainbow_parentheses#load(...)
 	for each in range(1, s:max)
 		let region = 'level'. each .(b:loaded[a:1] ? '' : 'none')
 		let grp = b:loaded[a:1] ? 'level'.each.'c' : 'Normal'
-		let cmd = 'sy region %s matchgroup=%s start=/%s/hs=s+1 end=/%s/ contains=TOP,%s,NoInParens'
-		exe printf(cmd, region, grp, type[0], type[1], join(alllvls, ','))
+		let cmd = 'sy region %s matchgroup=%s start=/%s/%s end=/%s/ contains=TOP,%s,NoInParens'
+		exe printf(cmd, region, grp, type[0], type[1], type[2], join(alllvls, ','))
 		cal remove(alllvls, 0)
 	endfor
 endfunc
