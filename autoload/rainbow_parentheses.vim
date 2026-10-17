@@ -65,6 +65,7 @@ func! rainbow_parentheses#toggleall()
 		cal rainbow_parentheses#load(0)
 		cal rainbow_parentheses#load(1)
 		cal rainbow_parentheses#load(2)
+		cal rainbow_parentheses#load(3)
 	endif
 	if exists('s:active') && s:active
 		cal rainbow_parentheses#clear()
@@ -89,7 +90,7 @@ func! rainbow_parentheses#load(...)
 	for each in range(1, s:max)
 		let region = 'level'. each .(b:loaded[a:1] ? '' : 'none')
 		let grp = b:loaded[a:1] ? 'level'.each.'c' : 'Normal'
-		let cmd = 'sy region %s matchgroup=%s start=/%s/%s end=/%s/ contains=TOP,%s,NoInParens'
+		let cmd = 'sy region %s matchgroup=%s start=/%s/%s fold end=/%s/ fold contains=TOP,%s,NoInParens'
 		exe printf(cmd, region, grp, type[0], type[1], type[2], join(alllvls, ','))
 		cal remove(alllvls, 0)
 	endfor
